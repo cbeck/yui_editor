@@ -35,7 +35,7 @@ module YuiEditor
       editor_class = options.delete(:simple_editor) ? 'SimpleEditor' : 'Editor'
       callbacks = (options.delete(:editor_extension_callbacks) || '')
       body_class = options.delete(:body_class) || 'yui-skin-sam'
-      base_uri = options.delete(:javascript_base_uri) || '//yui.yahooapis.com'
+      base_uri = options.delete(:javascript_base_uri) || 'http://yui.yahooapis.com'
       additional_yui_javascripts = options.delete(:additional_yui_javascripts) || []
 
       compression = RAILS_ENV == 'development' ? '' : '-min'
