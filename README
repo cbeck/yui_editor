@@ -3,6 +3,9 @@ YuiEditor
 
 Integrate the Yahoo Rich Text Editor (http://developer.yahoo.com/yui/editor/) into a Rails application.
 
+This fork adds functionality to load the js files as a combined download from Yahoo rather than downloading many files separately.
+To force individual downloads, please remove or make false the combine_scripts directive in the config/yui_editor.yml file.
+
 Example
 =======
 

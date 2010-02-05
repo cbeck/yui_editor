@@ -30,7 +30,7 @@ module YuiEditor
     def yui_editor_init
       options = YuiEditor.default_options.merge(@yui_editor_options || {})
 
-      version = options.delete(:version) || '2.6.0'
+      version = options.delete(:version) || '2.8.0r4'
       editor_selector = options.delete(:selector) || 'rich_text_editor'
       editor_class = options.delete(:simple_editor) ? 'SimpleEditor' : 'Editor'
       callbacks = (options.delete(:editor_extension_callbacks) || '')
@@ -43,14 +43,23 @@ module YuiEditor
       result = ''
       result << stylesheet_link_tag("#{base_uri}/#{version}/build/assets/skins/sam/skin.css") + "\n" if body_class == 'yui-skin-sam'
       
-      result << javascript_include_tag("#{base_uri}/#{version}/build/yahoo-dom-event/yahoo-dom-event.js") + "\n"
       yui_scripts = %w{element/element container/container_core}
       yui_scripts += %w{menu/menu button/button} unless editor_class == 'SimpleEditor'
       yui_scripts << 'editor/editor'
       yui_scripts += additional_yui_javascripts
-      yui_scripts.each do |script|
-        result << javascript_include_tag("#{base_uri}/#{version}/build/#{script}#{compression}.js") + "\n"
-      end
+      if combo 
+        # combo only available for yahoo - not google
+        scripts = "http://yui.yahooapis.com/combo?#{version}/build/yahoo-dom-event/yahoo-dom-event.js"
+        yui_scripts.each do |script|
+          scripts += "&#{version}/build/#{script}#{compression}.js"
+        end  
+        result << javascript_include_tag("#{scripts}") + "\n"
+      else
+        result << javascript_include_tag("#{base_uri}/#{version}/build/yahoo-dom-event/yahoo-dom-event.js") + "\n"        
+        yui_scripts.each do |script|
+          result << javascript_include_tag("#{base_uri}/#{version}/build/#{script}#{compression}.js") + "\n"
+        end        
+      end      
       (options[:editor_extension_javascripts] || []).each do |js|
         result << javascript_include_tag(js) + "\n"
       end

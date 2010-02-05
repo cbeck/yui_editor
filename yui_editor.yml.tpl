@@ -4,6 +4,7 @@ simple_editor: false
 body_class: yui-skin-sam
 editor_extension_callbacks: "// MyExtension.install(editor);"
 javascript_base_uri: //yui.yahooapis.com
+combine_scripts: true
 editor_extension_javascripts:
   # - extension1.js
   # - extension2.js
